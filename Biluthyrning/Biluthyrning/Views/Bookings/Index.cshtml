@@ -10,25 +10,29 @@
 
 @foreach (var car in Model.AvailableCars)
 {
-    <div class="card border-primary mb-2">
-        <p>
-            Biltyp: @car.CarType
-        </p>
-        <p>
-            Registreringsnummer: @car.CarRegistrationNumber
-        </p>
-        <p>
-            Körd distans: @car.DistanceStart km
-        </p>
+    <div class="card border-primary mb-3">
+        
+            <p style="padding-top: 5px;">
+                Biltyp: @car.CarType
+            </p>
+            <p>
+                Registreringsnummer: @car.CarRegistrationNumber
+            </p>
+            <p>
+                Mätarställning: @car.DistanceStart km
+            </p>
+
+            <a asp-controller="Bookings" asp-action="Book" asp-route-Reg="@(car.CarRegistrationNumber)" class="btn btn-primary">Boka</a>
     </div>
+
 }
 
 <h2 style="font-weight:bold; padding-bottom: 5px ">Bokade bilar</h2>
 @foreach (var car in Model.BookedCars)
 {
-    <div class="card border-secondary">
-        <p>
-            Bokningsnummer: @car.BookingNumber
+    <div class="card border-secondary mb-3">
+        <p style="padding-top: 5px;">
+            @*Bokningsnummer: @car.BookingNumber*@
         </p>
         <p>
             Biltyp: @car.CarType
@@ -37,7 +41,7 @@
             Registreringsnummer: @car.CarRegistrationNumber
         </p>
         <p>
-            Körda distans: @car.DistanceStart
+            Mätarställning: @car.DistanceStart
         </p>
     </div>
 }

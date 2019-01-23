@@ -21,13 +21,41 @@ namespace Biluthyrning.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<Car> cars = service.GetAllCars();
+            (List<Car> availableCars, List<Car> bookedCars) = service.GetAllCars();
+
             BookingIndexVM vm = new BookingIndexVM
             {
-                AvailableCars = cars.Where(c => c.BookingNumber == null).ToList(),
-                BookedCars = cars.Where(c => c.BookingNumber != null).ToList()
+                AvailableCars = availableCars,
+                BookedCars = bookedCars
             };
             return View(vm);
         }
+
+        [HttpGet]
+        public IActionResult Book()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Book(CreateBookingVM booking)
+        {
+            service.BookCar(booking.CarToBook);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Calculate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Calculate(CalculateCostVM calc)
+        {
+            return View();
+        }
+
+
     }
 }

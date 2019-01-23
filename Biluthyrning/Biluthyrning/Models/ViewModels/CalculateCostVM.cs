@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Biluthyrning.Models.ViewModels
 {
-    public class CreateBookingVM
+    public class CalculateCostVM
     {
-        public string SSN { get; set; }
-
-        public Car CarToBook { get; set; }
+        public Car RentedCar { get; set; }
     }
 }

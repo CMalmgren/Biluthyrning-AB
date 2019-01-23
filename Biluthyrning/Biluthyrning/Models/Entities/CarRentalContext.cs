@@ -35,19 +35,21 @@ namespace Biluthyrning.Models.Entities
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.HasKey(e => e.BookingNumber)
-                    .HasName("PK__Booking__AAC320BEE3B07CA2");
+                    .HasName("PK__Booking__AAC320BEAF14F5E2");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
-
-                entity.Property(e => e.RentalEnd).HasColumnType("datetime");
-
-                entity.Property(e => e.RentalStart).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Booking__Custome__25869641");
+                    .HasConstraintName("FK__Booking__Custome__71D1E811");
+
+                entity.HasOne(d => d.RentedCarNavigation)
+                    .WithMany(p => p.Booking)
+                    .HasForeignKey(d => d.RentedCar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Booking__RentedC__72C60C4A");
             });
 
             modelBuilder.Entity<Car>(entity =>
@@ -64,10 +66,9 @@ namespace Biluthyrning.Models.Entities
                     .HasMaxLength(32)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.BookingNumberNavigation)
-                    .WithMany(p => p.Car)
-                    .HasForeignKey(d => d.BookingNumber)
-                    .HasConstraintName("FK__Car__BookingNumb__286302EC");
+                entity.Property(e => e.RentalEnd).HasColumnType("datetime");
+
+                entity.Property(e => e.RentalStart).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Customer>(entity =>
