@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Biluthyrning.Models.ViewModels
 {
-    public class BookingIndexVM
+    public class CreateBookingVM
     {
-        public List<Car> AvailableCars { get; set; }
-        public List<Car> BookedCars { get; set; }
+        public string SSN { get; set; }
+
+        public Car CarToRent { get; set; }
     }
 }

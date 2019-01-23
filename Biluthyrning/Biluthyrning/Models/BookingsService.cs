@@ -14,5 +14,12 @@ namespace Biluthyrning.Models
         {
             this.carRentalContext = carRentalContext;            
         }
+
+        internal List<Car> GetAllCars()
+        {
+            List<Car> cars = carRentalContext.Car.ToList();
+
+            return cars;
+        }
     }
 }
