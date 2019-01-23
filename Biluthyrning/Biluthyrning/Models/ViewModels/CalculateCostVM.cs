@@ -9,5 +9,7 @@ namespace Biluthyrning.Models.ViewModels
     public class CalculateCostVM
     {
         public Car RentedCar { get; set; }
+        public DateTime DateRented { get; set; }
+        public DateTime DateReturned { get; set; }
     }
 }

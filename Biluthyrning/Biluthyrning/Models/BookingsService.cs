@@ -34,7 +34,6 @@ namespace Biluthyrning.Models
                 }
             }
 
-
             return (availableCars, bookedCars);
         }
 
@@ -51,6 +50,53 @@ namespace Biluthyrning.Models
             carRentalContext.Booking.Add(booking);
 
             carRentalContext.SaveChanges();
+        }
+
+        internal CreateBookingVM GetCarVM(string reg)
+        {
+            CreateBookingVM vm = new CreateBookingVM
+            {
+                CarToBook = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == reg)
+            };
+
+            return vm;
+        }
+
+        internal ResultVM CalculateCost(CalculateCostVM calcVM)
+        {
+            Booking booking = carRentalContext.Booking.SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id);
+
+            double price = -1;
+            double kmPrice = 1;
+            int numberOfKm = (int)calcVM.RentedCar.DistanceEnd - calcVM.RentedCar.DistanceStart;
+
+            int baseDayRental = 200;
+            double numberOfDays = calcVM.DateReturned.Subtract(calcVM.DateRented).TotalDays +1;  //Just nu räknas både start- och slutdag som dagar man betalar för.
+
+            if (calcVM.RentedCar.CarType == "Liten bil")
+            {
+                price = baseDayRental * numberOfDays;
+            }
+            else if (calcVM.RentedCar.CarType == "Van")
+            {
+                price = baseDayRental * numberOfDays * 1.2 + (kmPrice * numberOfKm);
+            }
+            else if (calcVM.RentedCar.CarType == "Minibuss")
+            {
+                price = baseDayRental * numberOfDays * 1.7 + (kmPrice * numberOfKm * 1.5);
+            }
+            else
+            {
+                throw new Exception("Type of car not supported");
+            }
+            
+            ResultVM result = new ResultVM
+            {
+                Customer = booking.Customer,
+                FinalPrice = price
+            };
+
+            return result;
         }
     }
 }

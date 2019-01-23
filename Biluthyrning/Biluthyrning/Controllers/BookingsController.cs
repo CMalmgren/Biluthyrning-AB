@@ -41,9 +41,9 @@ namespace Biluthyrning.Controllers
         [HttpGet]
         public IActionResult Book(string reg)
         {
-            return View();
+            CreateBookingVM vm = service.GetCarVM(reg);
+            return View(vm);
         }
-
 
         [HttpPost]
         public IActionResult Book(CreateBookingVM booking)
@@ -61,7 +61,9 @@ namespace Biluthyrning.Controllers
         [HttpPost]
         public IActionResult Calculate(CalculateCostVM calc)
         {
-            return View();
+            ResultVM resultVM = service.CalculateCost(calc);
+
+            return View(resultVM);
         }
 
 

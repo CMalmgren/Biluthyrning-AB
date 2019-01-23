@@ -3,6 +3,21 @@
     ViewData["Title"] = "Calculate";
 }
 
-<h1>Calculate</h1>
 
-<p>Här räknar man ut slutpris på en faktisk bokning</p>
+<h2 style="font-weight:bold; padding-bottom: 5px ">Beräkna pris</h2>
+
+<p>Räkna ut slutpriset vid bilens återlämning</p>
+
+<div>
+    <form asp-controller="Bookings" asp-action="Calculate">
+@*Ta in den aktuella bokningen genom rullista av regnummer, 
+    lägga till slutlig mätarställning, 
+    beräkna*@
+        <button type="submit" class="btn btn-secondary">Beräkna pris</button>
+</form>
+
+</div>
+
+<div>
+    Här ska priset dyka upp när man klickar beräkna
+</div>
