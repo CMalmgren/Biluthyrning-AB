@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Översikt";
 }
 
 @model BookingIndexVM
@@ -22,7 +22,7 @@
                 Mätarställning: @car.DistanceStart km
             </p>
 
-            <a asp-controller="Bookings" asp-action="Book" asp-route-Reg="@(car.CarRegistrationNumber)" class="btn btn-primary">Boka</a>
+            <a asp-controller="Bookings" asp-action="Book" asp-route-reg="@(car.CarRegistrationNumber)" class="btn btn-primary">Boka</a>
     </div>
 
 }

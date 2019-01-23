@@ -1,4 +1,5 @@
 ﻿using Biluthyrning.Models.Entities;
+using Biluthyrning.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +38,19 @@ namespace Biluthyrning.Models
             return (availableCars, bookedCars);
         }
 
-        internal void BookCar(Car carToBook)
+
+        internal void BookCar(CreateBookingVM bookingToSave)
         {
-            Booking booking = new Booking();
-            //booking.Car = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == carToBook.CarRegistrationNumber);
+            Customer customer = carRentalContext.Customer.SingleOrDefault(c => c.CustomerSsn == bookingToSave.SSN);
+            Booking booking = new Booking
+            {
+                RentedCar = bookingToSave.CarToBook.Id,
+                CustomerId = customer.Id
+            };
 
+            carRentalContext.Booking.Add(booking);
 
+            carRentalContext.SaveChanges();
         }
     }
 }

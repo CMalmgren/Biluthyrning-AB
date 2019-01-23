@@ -37,10 +37,18 @@ namespace Biluthyrning.Controllers
             return View();
         }
 
+        [Route("/Bookings/Book/{reg}")]
+        [HttpGet]
+        public IActionResult Book(string reg)
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public IActionResult Book(CreateBookingVM booking)
         {
-            service.BookCar(booking.CarToBook);
+            service.BookCar(booking);
             return RedirectToAction(nameof(Index));
         }
 
