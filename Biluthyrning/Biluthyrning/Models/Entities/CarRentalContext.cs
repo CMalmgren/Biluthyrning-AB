@@ -35,7 +35,7 @@ namespace Biluthyrning.Models.Entities
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.HasKey(e => e.BookingNumber)
-                    .HasName("PK__Booking__AAC320BEAF14F5E2");
+                    .HasName("PK__Booking__AAC320BE368567C1");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
@@ -43,13 +43,13 @@ namespace Biluthyrning.Models.Entities
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Booking__Custome__71D1E811");
+                    .HasConstraintName("FK__Booking__Custome__04E4BC85");
 
                 entity.HasOne(d => d.RentedCarNavigation)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.RentedCar)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Booking__RentedC__72C60C4A");
+                    .HasConstraintName("FK__Booking__RentedC__05D8E0BE");
             });
 
             modelBuilder.Entity<Car>(entity =>

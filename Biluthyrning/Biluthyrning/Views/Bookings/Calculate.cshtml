@@ -1,8 +1,8 @@
 ﻿
 @{
-    ViewData["Title"] = "Calculate";
+    ViewData["Title"] = "Beräkna";
 }
-
+@model CalculateCostVM
 
 <h2 style="font-weight:bold; padding-bottom: 5px ">Beräkna pris</h2>
 
@@ -10,14 +10,37 @@
 
 <div>
     <form asp-controller="Bookings" asp-action="Calculate">
-@*Ta in den aktuella bokningen genom rullista av regnummer, 
-    lägga till slutlig mätarställning, 
-    beräkna*@
+        <div class="row">
+            <div class="form-group col-4">
+                <label asp-for="CustomerSSN"></label>
+                <input type="text" asp-for="CustomerSSN" class="form-control" />
+                <span asp-validation-for="CustomerSSN"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="DistanceEnd"></label>
+                <input type="text" asp-for="DistanceEnd" class="form-control" />
+                <span asp-validation-for="DistanceEnd"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="DateReturned"></label>
+                <input type="text" class="form-control" id="datepicker" />
+            </div>
+        </div>
+        @*Ta fram aktuella bilar med ett ajax, markera den bil man vill lämna tillbaka, skicka med bilen*@
         <button type="submit" class="btn btn-secondary">Beräkna pris</button>
-</form>
+    </form>
 
 </div>
 
 <div>
     Här ska priset dyka upp när man klickar beräkna
+    @*Skicka in den diven med ett javascript.*@
 </div>
+
+@section Script {
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+        });
+    </script>
+}
