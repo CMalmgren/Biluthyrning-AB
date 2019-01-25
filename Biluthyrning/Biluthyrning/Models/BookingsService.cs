@@ -37,18 +37,38 @@ namespace Biluthyrning.Models
             return (availableCars, bookedCars);
         }
 
+        internal List<Car> GetAvailableCars()
+        {
+            return carRentalContext.Car.Where(c => c.Booking == null).ToList();
+        }
 
         internal void BookCar(CreateBookingVM bookingToSave)
         {
-            Customer customer = carRentalContext.Customer.SingleOrDefault(c => c.CustomerSsn == bookingToSave.SSN);
+            Customer customer = new Customer();
+
+            if (carRentalContext.Customer.Any(c => c.CustomerSsn == bookingToSave.SSN))
+            {
+                Customer existingCustomer = carRentalContext.Customer.SingleOrDefault(c => c.CustomerSsn == bookingToSave.SSN);
+                customer = existingCustomer;
+            }
+            else
+            {
+                Customer newCustomer = new Customer
+                {
+                    CustomerSsn = bookingToSave.SSN
+                };
+                carRentalContext.Customer.Add(newCustomer);
+                carRentalContext.SaveChanges();
+                customer = newCustomer;
+            }
+
             Booking booking = new Booking
             {
                 RentedCar = bookingToSave.CarToBook.Id,
-                CustomerId = customer.Id
+                CustomerId = customer.Id,
             };
 
             carRentalContext.Booking.Add(booking);
-
             carRentalContext.SaveChanges();
         }
 
@@ -56,7 +76,7 @@ namespace Biluthyrning.Models
         {
             CreateBookingVM vm = new CreateBookingVM
             {
-                CarToBook = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == reg)
+                CarToBook = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == reg),
             };
 
             return vm;
@@ -71,7 +91,8 @@ namespace Biluthyrning.Models
             int numberOfKm = (int)calcVM.RentedCar.DistanceEnd - calcVM.RentedCar.DistanceStart;
 
             int baseDayRental = 200;
-            double numberOfDays = calcVM.DateReturned.Subtract(calcVM.DateRented).TotalDays +1;  //Just nu räknas både start- och slutdag som dagar man betalar för.
+
+            double numberOfDays = calcVM.DateReturned.Subtract(calcVM.DateRented).TotalDays + 1;  //Just nu räknas både start- och slutdag som dagar man betalar för.
 
             if (calcVM.RentedCar.CarType == "Liten bil")
             {
@@ -89,7 +110,7 @@ namespace Biluthyrning.Models
             {
                 throw new Exception("Type of car not supported");
             }
-            
+
             ResultVM result = new ResultVM
             {
                 Customer = booking.Customer,

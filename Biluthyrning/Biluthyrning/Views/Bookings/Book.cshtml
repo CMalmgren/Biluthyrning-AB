@@ -6,20 +6,25 @@
 
 <h2 style="font-weight:bold; padding-bottom: 5px ">Boka en bil</h2>
 <br />
-
-@*Personens som ska hyra personnummer*@
-
-@*Startdag ur kalender*@
-
-@*Om man kom till sidan genom navbar ska alla bilar listas (alla ska vara förvalt)
-Om man kom hit via en bil från översikten ska den relevanta biltypen samt den relevanta biltypen vara förvald så man bara behöver klicka på skicka!*@
-
 <div>
     <form class="form-group" asp-controller="Bookings" asp-action="Book">
         <div class="row" style="position:center">
             <div class="col-3"></div>
+            <div class="form-group col-3">
+                <label asp-for="SSN"></label>
+                <input type="text" asp-for="SSN" class="form-control" />
+                <span asp-validation-for="SSN"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="StartOfRental"></label>
+                <input asp-for="StartOfRental" type="text" class="form-control" id="datepicker" />
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row" style="position:center">
+            <div class="col-3"></div>
             <div class="custom-control custom-checkbox col-2">
-                <input type="checkbox" name="CarType" class="custom-control-input" id="Liten bil" checked="">
+                <input type="checkbox" name="CarType" class="custom-control-input" id="LitenBil" checked="">
                 <label class="custom-control-label" for="Liten bil">Liten bil</label>
             </div>
             <div class="custom-control custom-checkbox col-2">
@@ -33,17 +38,57 @@ Om man kom hit via en bil från översikten ska den relevanta biltypen samt den 
             <div class="col-3"></div>
         </div>
 
-
-
-        @*Göra AJAX-anrop för att sortera upp relevanta bilar
-            Sedan kunna välja bland bilar av vald typ
-            Man ska kunna välja av befintliga bilar av vald typ, sedan köra en submit nedan så skickas bilen med in i vymodellen
-            *@
-
-
+        <div id="resultsLitenBil">
+            @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Liten Bil"))
+            {
+                <div>
+                    <p>@avCar.CarType</p>
+                    <p>@avCar.DistanceStart</p>
+                    <p>@avCar.CarRegistrationNumber</p>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="@avCar.CarRegistrationNumber" name="SelectedCar" class="custom-control-input">
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="resultsVan">
+            @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Van"))
+            {
+                <div>
+                    <p>@avCar.CarType</p>
+                    <p>@avCar.DistanceStart</p>
+                    <p>@avCar.CarRegistrationNumber</p>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="@avCar.CarRegistrationNumber" name="SelectedCar" class="custom-control-input">
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="resultsMinibuss">
+            @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Minibuss"))
+            {
+                <div>
+                    <p>@avCar.CarType</p>
+                    <p>@avCar.DistanceStart</p>
+                    <p>@avCar.CarRegistrationNumber</p>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="@avCar.CarRegistrationNumber" name="SelectedCar" class="custom-control-input">
+                    </div>
+                </div>
+            }
+        </div>
 
         <br />
         <input type="submit" value="Boka bil" class="btn btn-secondary" />
     </form>
 
 </div>
+
+@section Script {
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+        });
+    </script>
+    <script type="text/javascript" src="~/Scripts/ShowCars.js"></script>
+}

@@ -10,17 +10,19 @@ namespace Biluthyrning.Models.ViewModels
     public class CalculateCostVM
     {
         [Display(Name ="Personnummer")]
-        [Required, MaxLength(13, ErrorMessage ="Ange personnumret i formatet ÅÅÅÅMMDD-NNNN")]
-        [RegularExpression("^ (19 | 20)?[0 - 9]{6}[- ]?[0 - 9]{4}$")]
+        [Required]
+        [RegularExpression(@"^(((20)((0[0 - 9]) | (1[0 - 1]))) | (([1][^ 0 - 8]) ?\d{2}))((0[1-9])|1[0-2])((0[1-9])|(2[0-9])|(3[01]))[-]?\d{4}$", ErrorMessage ="Felaktigt ifyllt personnummer")]
         public string CustomerSSN { get; set; }
 
         public Car RentedCar { get; set; }
-        public DateTime DateRented { get; set; }
 
         [Display(Name ="Återlämningsdatum")]
+        [Required]
         [DataType(DataType.Date)]
         public DateTime DateReturned { get; set; }
+        public DateTime DateRented { get; set; }
 
+        [Required]
         [Display(Name ="Mätarställning vid återlämning")]
         public int DistanceEnd { get; set; }
     }

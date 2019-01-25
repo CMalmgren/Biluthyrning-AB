@@ -34,7 +34,11 @@ namespace Biluthyrning.Controllers
         [HttpGet]
         public IActionResult Book()
         {
-            return View();
+            CreateBookingVM bookingVM = new CreateBookingVM
+            {
+                AvailableCars = service.GetAvailableCars()
+            };
+            return View(bookingVM);
         }
 
         [Route("/Bookings/Book/{reg}")]
@@ -42,6 +46,7 @@ namespace Biluthyrning.Controllers
         public IActionResult Book(string reg)
         {
             CreateBookingVM vm = service.GetCarVM(reg);
+
             return View(vm);
         }
 
