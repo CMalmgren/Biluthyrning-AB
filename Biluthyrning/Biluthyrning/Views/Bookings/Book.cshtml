@@ -79,11 +79,9 @@
                 </div>
             }
         </div>
-
         <br />
         <input type="submit" value="Boka bil" class="btn btn-secondary" />
     </form>
-
 </div>
 
 @section Script {
@@ -102,6 +100,7 @@
                     $("#resultsLitenBil").hide();
                 }
             });
+
             $("#CheckVan").click(function () {
                 if ($(this).is(":checked")) {
                     $("#resultsVan").show();

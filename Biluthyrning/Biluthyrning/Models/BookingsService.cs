@@ -83,7 +83,7 @@ namespace Biluthyrning.Models
             return vm;
         }
 
-        internal ResultVM CalculateCost(CalculateCostVM calcVM)
+        internal CalculateCostVM CalculateCost(CalculateCostVM calcVM)
         {
             Booking booking = carRentalContext.Booking.SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id);
 
@@ -112,13 +112,9 @@ namespace Biluthyrning.Models
                 throw new Exception("Type of car not supported");
             }
 
-            ResultVM result = new ResultVM
-            {
-                Customer = booking.Customer,
-                FinalPrice = price
-            };
+            calcVM.FinalPrice = price;
 
-            return result;
+            return calcVM;
         }
     }
 }

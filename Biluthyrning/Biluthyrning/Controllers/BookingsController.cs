@@ -66,7 +66,7 @@ namespace Biluthyrning.Controllers
         [HttpPost]
         public IActionResult Calculate(CalculateCostVM calc)
         {
-            ResultVM resultVM = service.CalculateCost(calc);
+            CalculateCostVM resultVM = service.CalculateCost(calc);
 
             return View(resultVM);
         }

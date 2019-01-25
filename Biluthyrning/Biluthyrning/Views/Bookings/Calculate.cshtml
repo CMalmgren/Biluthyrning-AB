@@ -27,14 +27,15 @@
             </div>
         </div>
         @*Ta fram aktuella bilar med ett ajax, markera den bil man vill lämna tillbaka, skicka med bilen*@
-        <button type="submit" class="btn btn-secondary">Beräkna pris</button>
+        <button type="submit" id="CalcPrice" class="btn btn-secondary">Beräkna pris</button>
     </form>
 
 </div>
 
-<div>
-    Här ska priset dyka upp när man klickar beräkna
-    @*Skicka in den diven med ett javascript.*@
+<div id="resultPrice">
+    <p>
+        Priset för denna uthyrning blir @Model.FinalPrice 
+    </p>
 </div>
 
 @section Script {
@@ -42,5 +43,16 @@
         $(function () {
             $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
         });
+    </script>
+
+    <script type="text/javascript">
+        function onClick() {
+            if ($(this).hasId("calcPrice")) {
+                $("#resultPrice").show();
+            }
+            else {
+                $("#resultPrice").hide();
+            }
+        }
     </script>
 }

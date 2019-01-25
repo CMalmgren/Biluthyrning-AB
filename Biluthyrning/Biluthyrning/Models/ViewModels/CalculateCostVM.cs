@@ -25,5 +25,7 @@ namespace Biluthyrning.Models.ViewModels
         [Required]
         [Display(Name ="Mätarställning vid återlämning")]
         public int DistanceEnd { get; set; }
+
+        public double FinalPrice { get; set; }
     }
 }
