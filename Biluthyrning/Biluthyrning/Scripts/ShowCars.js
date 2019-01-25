@@ -1,7 +1,6 @@
 ﻿$(function () {
 
-    $(function () {
-        $("#LitenBil").click(function () {
+        $("#CheckLitenBil").click(function () {
             if ($(this).is(":checked")) {
                 $("#resultsLitenBil").show();
 
@@ -12,7 +11,7 @@
     });
 
     $(function () {
-        $("#Van").click(function () {
+        $("#CheckVan").click(function () {
             if ($(this).is(":checked")) {
                 $("#resultsVan").show();
 
@@ -23,7 +22,7 @@
     });
 
     $(function () {
-        $("#Minibuss").click(function () {
+        $("#CheckMinibuss").click(function () {
             if ($(this).is(":checked")) {
                 $("#resultsMinibuss").show();
 

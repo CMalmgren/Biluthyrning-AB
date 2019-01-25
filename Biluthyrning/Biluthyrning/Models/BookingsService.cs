@@ -39,7 +39,8 @@ namespace Biluthyrning.Models
 
         internal List<Car> GetAvailableCars()
         {
-            return carRentalContext.Car.Where(c => c.Booking == null).ToList();
+            List<Car> availableCars = carRentalContext.Car.ToList();
+            return availableCars;
         }
 
         internal void BookCar(CreateBookingVM bookingToSave)
