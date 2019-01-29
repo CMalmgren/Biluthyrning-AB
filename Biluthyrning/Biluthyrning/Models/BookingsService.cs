@@ -39,24 +39,34 @@ namespace Biluthyrning.Models
 
         internal List<Car> GetAvailableCars()
         {
-            List<Car> availableCars = carRentalContext.Car.ToList();
+            List<Car> cars = carRentalContext.Car.ToList();
+            List<Car> availableCars = new List<Car>();
+            foreach (Car car in cars)
+            {
+                if (!carRentalContext.Booking.Any(b => b.RentedCar == car.Id))
+                {
+                    availableCars.Add(car);
+                }
+               
+            }
+
             return availableCars;
         }
 
-        internal void BookCar(CreateBookingVM bookingToSave)
+        internal void BookCar(CreateBookingVM createBooking)
         {
             Customer customer = new Customer();
 
-            if (carRentalContext.Customer.Any(c => c.CustomerSsn == bookingToSave.SSN))
+            if (carRentalContext.Customer.Any(c => c.CustomerSsn == createBooking.SSN))
             {
-                Customer existingCustomer = carRentalContext.Customer.SingleOrDefault(c => c.CustomerSsn == bookingToSave.SSN);
+                Customer existingCustomer = carRentalContext.Customer.SingleOrDefault(c => c.CustomerSsn == createBooking.SSN);
                 customer = existingCustomer;
             }
             else
             {
                 Customer newCustomer = new Customer
                 {
-                    CustomerSsn = bookingToSave.SSN
+                    CustomerSsn = createBooking.SSN
                 };
                 carRentalContext.Customer.Add(newCustomer);
                 carRentalContext.SaveChanges();
@@ -65,7 +75,7 @@ namespace Biluthyrning.Models
 
             Booking booking = new Booking
             {
-                RentedCar = bookingToSave.CarToBook.Id,
+                RentedCar = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == createBooking.RegistrationNumber).Id,
                 CustomerId = customer.Id,
             };
 
@@ -77,7 +87,7 @@ namespace Biluthyrning.Models
         {
             CreateBookingVM vm = new CreateBookingVM
             {
-                CarToBook = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == reg),
+                //CarToBook = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == reg),
             };
 
             return vm;

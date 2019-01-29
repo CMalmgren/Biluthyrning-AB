@@ -11,7 +11,7 @@ namespace Biluthyrning.Models.ViewModels
     {
         [Display(Name ="Personnummer")]
         [Required]
-        [RegularExpression(@"^(((20)((0[0 - 9]) | (1[0 - 1]))) | (([1][^ 0 - 8]) ?\d{2}))((0[1-9])|1[0-2])((0[1-9])|(2[0-9])|(3[01]))[-]?\d{4}$", ErrorMessage ="Felaktigt ifyllt personnummer")]
+        //[RegularExpression(@"^(((20)((0[0 - 9]) | (1[0 - 1]))) | (([1][^ 0 - 8]) ?\d{2}))((0[1-9])|1[0-2])((0[1-9])|(2[0-9])|(3[01]))[-]?\d{4}$", ErrorMessage ="Felaktigt ifyllt personnummer")]
         public string CustomerSSN { get; set; }
 
         public Car RentedCar { get; set; }

@@ -21,6 +21,9 @@
             </div>
             <div class="col-3"></div>
         </div>
+        <div style="padding: 5px">
+            <input type="submit" value="Boka bil" class="btn btn-secondary" />
+        </div>
         <div class="row" style="position:center">
             <div class="col-3"></div>
             <div class="custom-control custom-checkbox col-2">
@@ -40,47 +43,53 @@
 
         <div id="resultsLitenBil">
             <div>
-                @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Liten Bil"))
+                @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Liten bil"))
                 {
-                <div>
+                <div class="card" style="padding: 10px">
                     <p>Biltyp: @avCar.CarType</p>
                     <p>Mätarställning: @avCar.DistanceStart</p>
                     <p>Registreringsnummer: @avCar.CarRegistrationNumber</p>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="@avCar.CarRegistrationNumber" name="SelectedCar" class="custom-control-input">
+                    <div class="custom-control custom-radio" style="padding-bottom: 10px">
+                        <input asp-for="RegistrationNumber" type="radio" id="RegistrationNumber" name="RegistrationNumber" class="custom-control-input" value="@avCar.CarRegistrationNumber">
+                        <label class="custom-control-label" for="RegistrationNumber">Välj bil</label>
                     </div>
                 </div>
+                <br />
                 }
                 </div>
             </div>
         <div id="resultsVan">
             @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Van"))
             {
-            <div>
-                <p>Biltyp: @avCar.CarType</p>
-                <p>Mätarställning: @avCar.DistanceStart</p>
-                <p>Registreringsnummer: @avCar.CarRegistrationNumber</p>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="@avCar.CarRegistrationNumber" name="SelectedCar" class="custom-control-input">
+                <div class="card" style="padding: 10px">
+                    <p>Biltyp: @avCar.CarType</p>
+                    <p>Mätarställning: @avCar.DistanceStart</p>
+                    <p>Registreringsnummer: @avCar.CarRegistrationNumber</p>
+                    <div class="custom-control custom-radio" style="padding-bottom: 10px">
+                        <input asp-for="RegistrationNumber" type="radio" id="RegistrationNumber" name="RegistrationNumber" class="custom-control-input" value="@avCar.CarRegistrationNumber">
+                        <label class="custom-control-label" for="RegistrationNumber">Välj bil</label>
+                    </div>
                 </div>
-            </div>
+                <br />
             }
         </div>
         <div id="resultsMinibuss">
             @foreach (var avCar in Model.AvailableCars.Where(c => c.CarType == "Minibuss"))
             {
-                <div class="card">
+                <div class="card" style="padding: 10px">
                     <p>Biltyp: @avCar.CarType</p>
                     <p>Mätarställning: @avCar.DistanceStart</p>
                     <p>Registreringsnummer: @avCar.CarRegistrationNumber</p>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="@avCar.CarRegistrationNumber" name="SelectedCar" class="custom-control-input">
+                    <div class="custom-control custom-radio" style="padding-bottom: 10px">
+                        <input asp-for="RegistrationNumber" type="radio" id="RegistrationNumber" name="RegistrationNumber" class="custom-control-input" value="@avCar.CarRegistrationNumber">
+                        <label class="custom-control-label" for="RegistrationNumber">Välj bil</label>
                     </div>
                 </div>
+                <br />
             }
         </div>
         <br />
-        <input type="submit" value="Boka bil" class="btn btn-secondary" />
+        
     </form>
 </div>
 

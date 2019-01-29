@@ -53,6 +53,7 @@ namespace Biluthyrning.Controllers
         [HttpPost]
         public IActionResult Book(CreateBookingVM booking)
         {
+
             service.BookCar(booking);
             return RedirectToAction(nameof(Index));
         }
