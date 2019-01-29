@@ -64,7 +64,6 @@ namespace Biluthyrning.Controllers
             {
                 FinalPrice = 0,
             };
-
             return View(calc);
         }
 
@@ -72,18 +71,14 @@ namespace Biluthyrning.Controllers
         public IActionResult Calculate(CalculateCostVM calc)
         {
             CalculateCostVM resultVM = service.CalculateCost(calc);
-
             return View(resultVM);
         }
 
         [HttpPost]
-        public IActionResult ReturnCar(CalculateCostVM returning)
+        public IActionResult ReturnCar(int carId, string ssn, int distanceEnd)
         {
-            service.ReturnCar(returning);
-
+            service.ReturnCar(carId, ssn, distanceEnd);
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

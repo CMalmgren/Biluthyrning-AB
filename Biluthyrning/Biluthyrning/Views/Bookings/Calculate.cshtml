@@ -11,6 +11,7 @@
 <div>
     <form asp-controller="Bookings" asp-action="Calculate">
         <div class="row">
+            <div class="col-2"></div>
             <div class="form-group col-4">
                 <label asp-for="CustomerSSN"></label>
                 <input type="text" asp-for="CustomerSSN" class="form-control" />
@@ -21,23 +22,33 @@
                 <input type="text" asp-for="DistanceEnd" class="form-control" />
                 <span asp-validation-for="DistanceEnd"></span>
             </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
             <div class="form-group col-4">
                 <label asp-for="DateReturned"></label>
                 <input type="text" asp-for="DateReturned" class="form-control" id="datepicker" />
             </div>
+            <div class="form-group col-4">
+                <label asp-for="CarRegistration"></label>
+                <input type="text" asp-for="CarRegistration" class="form-control" />
+            </div>
+            <div class="col-2"></div>
         </div>
         @*Ta fram aktuella bilar med ett ajax, markera den bil man vill lämna tillbaka, skicka med bilen*@
         <button type="submit" id="CalcPrice" class="btn btn-secondary">Beräkna pris</button>
     </form>
-
 </div>
 <br />
 <div id="resultPrice">
     <p>
         Priset för denna uthyrning blir @Model.FinalPrice
     </p>
-    <form asp-controller="Booking" asp-action="ReturnCar">
-        <input type="hidden" value="@Model" />
+    <form asp-controller="Bookings" asp-action="ReturnCar">
+        <input type="hidden" value="@Model.RentedCar.Id" />
+        <input type="hidden" value="@Model.CustomerSSN" />
+        <input type="hidden" value="@Model.DistanceEnd" />
         <input class="btn btn-secondary" type="submit" value="Lämna tillbaka bil och betala" />
     </form>
 </div>
@@ -48,15 +59,16 @@
             $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
         });
     </script>
-
+   
     <script type="text/javascript">
         $(function () {
-            if ($("#CalcPrice").click) {
-                $("#resultPrice").show();
-            }
-            else {
+            if (false) {
                 $("#resultPrice").hide();
             }
+            else{
+                $("#resultPrice").show();
+            }
         });
+      
     </script>
 }

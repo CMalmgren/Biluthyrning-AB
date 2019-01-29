@@ -20,12 +20,14 @@ namespace Biluthyrning.Models.ViewModels
         [Required]
         [DataType(DataType.Date)]
         public DateTime DateReturned { get; set; }
-        public DateTime DateRented { get; set; }
 
         [Required]
         [Display(Name ="Mätarställning vid återlämning")]
         public int DistanceEnd { get; set; }
 
         public double FinalPrice { get; set; }
+
+        [Display(Name ="Registreringsnummer")]
+        public string CarRegistration { get; set; }
     }
 }
