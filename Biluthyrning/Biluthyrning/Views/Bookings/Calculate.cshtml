@@ -31,11 +31,15 @@
     </form>
 
 </div>
-
+<br />
 <div id="resultPrice">
     <p>
-        Priset för denna uthyrning blir @Model.FinalPrice 
+        Priset för denna uthyrning blir @Model.FinalPrice
     </p>
+    <form asp-controller="Booking" asp-action="ReturnCar">
+        <input type="hidden" value="@Model" />
+        <input class="btn btn-secondary" type="submit" value="Lämna tillbaka bil och betala" />
+    </form>
 </div>
 
 @section Script {
@@ -46,13 +50,13 @@
     </script>
 
     <script type="text/javascript">
-        function onClick() {
-            if ($(this).hasId("calcPrice")) {
+        $(function () {
+            if ($("#CalcPrice").click) {
                 $("#resultPrice").show();
             }
             else {
                 $("#resultPrice").hide();
             }
-        }
+        });
     </script>
 }

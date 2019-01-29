@@ -47,7 +47,6 @@ namespace Biluthyrning.Models
                 {
                     availableCars.Add(car);
                 }
-               
             }
 
             return availableCars;
@@ -79,7 +78,19 @@ namespace Biluthyrning.Models
                 CustomerId = customer.Id,
             };
 
+            carRentalContext.Car.SingleOrDefault(c => c.Id == booking.RentedCar).RentalStart = createBooking.StartOfRental;
             carRentalContext.Booking.Add(booking);
+            carRentalContext.SaveChanges();
+        }
+
+        internal void ReturnCar(CalculateCostVM returning)
+        {
+            Car car = carRentalContext.Car.SingleOrDefault(c => c.Id == returning.RentedCar.Id);
+            car.DistanceStart = returning.DistanceEnd;
+            Booking booking = carRentalContext.Booking.SingleOrDefault(c => c.RentedCar == returning.RentedCar.Id 
+                && c.CustomerId == carRentalContext.Customer.SingleOrDefault(d => d.CustomerSsn == returning.CustomerSSN).Id);
+
+            carRentalContext.Booking.Remove(booking);
             carRentalContext.SaveChanges();
         }
 
@@ -95,7 +106,10 @@ namespace Biluthyrning.Models
 
         internal CalculateCostVM CalculateCost(CalculateCostVM calcVM)
         {
-            Booking booking = carRentalContext.Booking.SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id);
+            Booking booking = carRentalContext.Booking
+                .SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id 
+                && c.CustomerId == carRentalContext.Booking
+                .SingleOrDefault(b => b.Customer.CustomerSsn == calcVM.CustomerSSN).Customer.Id);
 
             double price = -1;
             double kmPrice = 1;

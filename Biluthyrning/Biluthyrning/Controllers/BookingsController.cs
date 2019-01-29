@@ -53,7 +53,6 @@ namespace Biluthyrning.Controllers
         [HttpPost]
         public IActionResult Book(CreateBookingVM booking)
         {
-
             service.BookCar(booking);
             return RedirectToAction(nameof(Index));
         }
@@ -61,7 +60,12 @@ namespace Biluthyrning.Controllers
         [HttpGet]
         public IActionResult Calculate()
         {
-            return View();
+            CalculateCostVM calc = new CalculateCostVM()
+            {
+                FinalPrice = 0,
+            };
+
+            return View(calc);
         }
 
         [HttpPost]
@@ -70,6 +74,14 @@ namespace Biluthyrning.Controllers
             CalculateCostVM resultVM = service.CalculateCost(calc);
 
             return View(resultVM);
+        }
+
+        [HttpPost]
+        public IActionResult ReturnCar(CalculateCostVM returning)
+        {
+            service.ReturnCar(returning);
+
+            return RedirectToAction(nameof(Index));
         }
 
 
