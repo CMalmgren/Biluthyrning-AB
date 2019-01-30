@@ -109,7 +109,7 @@ namespace Biluthyrning.Models
 
         internal CalculateCostVM CalculateCost(CalculateCostVM calcVM)
         {
-            calcVM.RentedCar = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == calcVM.CarRegistration);
+            calcVM.RentedCar = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber.ToUpper() == calcVM.CarRegistration);
 
             Booking booking = carRentalContext.Booking
                 .SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id 
