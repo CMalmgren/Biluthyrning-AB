@@ -79,6 +79,7 @@ namespace Biluthyrning.Controllers
         {
             if (ModelState.IsValid)
             {
+                var x = service.CalculateCost(calc);
                 return View(service.CalculateCost(calc));
             }
             else

@@ -47,9 +47,10 @@
     </p>
     <form asp-controller="Bookings" asp-action="ReturnCar">
         <input class="btn btn-secondary" type="submit" value="Lämna tillbaka bil och betala" />
-        <input type="hidden" value="@Model.RentedCar.Id" />
-        <input type="hidden" value="@Model.CustomerSSN" />
-        <input type="hidden" value="@Model.DateReturned" />
+        <input type="hidden" value="@Model.RentedCar?.Id" name="carId"/>
+        <input type="hidden" value="@Model.CustomerSSN" name="ssn"/>
+        <input type="hidden" value="@Model.DistanceEnd" name="distanceEnd"/>
+        <input type="hidden" id="finalPrice" value="@Model.FinalPrice" />
     </form>
 </div>
 
@@ -62,15 +63,14 @@
         });
     </script>
    
-    <script type="text/javascript">  //TODO: Gör om detta till ett JS som inte bara show/hide utan som tar in variabler och håller i dem för att populera mina hidden inputs i return car, om det går??
+    <script type="text/javascript"> 
         $(function () {
-            if (false) {
-                $("#resultPrice").hide();
-            }
-            else{
+            if ($("#finalPrice").val() != 0) {
                 $("#resultPrice").show();
             }
+            else{
+                $("#resultPrice").hide();
+            }
         });
-      
     </script>
 }

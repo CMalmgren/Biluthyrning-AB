@@ -2,6 +2,7 @@
 using Biluthyrning.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace Biluthyrning.Models
 
             if (carRentalContext.Customer.Any(c => c.CustomerSsn == createBooking.SSN))
             {
-                Customer existingCustomer = carRentalContext.Customer.SingleOrDefault(c => c.CustomerSsn == createBooking.SSN);
+                Customer existingCustomer = carRentalContext.Customer.Single(c => c.CustomerSsn == createBooking.SSN);
                 customer = existingCustomer;
             }
             else
@@ -74,7 +75,7 @@ namespace Biluthyrning.Models
 
             Booking booking = new Booking
             {
-                RentedCar = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber == createBooking.RegistrationNumber).Id,
+                RentedCar = carRentalContext.Car.Single(c => c.CarRegistrationNumber == createBooking.RegistrationNumber).Id,
                 CustomerId = customer.Id,
             };
 
@@ -89,9 +90,22 @@ namespace Biluthyrning.Models
 
             car.DistanceStart = distanceReturn;
             car.RentalStart = null;
+            Customer customer = carRentalContext.Customer.SingleOrDefault(d => d.CustomerSsn == customerSSN);
 
-            Booking booking = carRentalContext.Booking.SingleOrDefault(c => c.RentedCar == carID
-                && c.CustomerId == carRentalContext.Customer.SingleOrDefault(d => d.CustomerSsn == customerSSN).Id);
+            if (customer == null)
+            {
+                Debugger.Break();
+                return;
+            }
+            
+            Booking booking = carRentalContext.Booking
+                .SingleOrDefault(c => c.RentedCar == carID && c.CustomerId == customer.Id);
+
+            if (booking == null)
+            {
+                Debugger.Break();
+                return;
+            }
 
             carRentalContext.Booking.Remove(booking);
             carRentalContext.SaveChanges();
@@ -111,9 +125,10 @@ namespace Biluthyrning.Models
         {
             calcVM.RentedCar = carRentalContext.Car.SingleOrDefault(c => c.CarRegistrationNumber.ToUpper() == calcVM.CarRegistration);
 
+            //Customer customer = 
+
             Booking booking = carRentalContext.Booking
-                .SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id 
-                && c.CustomerId == carRentalContext.Booking
+                .SingleOrDefault(c => c.RentedCar == calcVM.RentedCar.Id && c.CustomerId == carRentalContext.Booking
                 .SingleOrDefault(b => b.Customer.CustomerSsn == calcVM.CustomerSSN).Customer.Id);
 
             double price = -1;
