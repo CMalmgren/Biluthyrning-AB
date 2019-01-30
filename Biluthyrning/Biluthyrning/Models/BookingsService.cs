@@ -86,8 +86,10 @@ namespace Biluthyrning.Models
         internal void ReturnCar(int carID, string customerSSN, int distanceReturn)
         {
             Car car = carRentalContext.Car.SingleOrDefault(c => c.Id == carID);
+
             car.DistanceStart = distanceReturn;
             car.RentalStart = null;
+
             Booking booking = carRentalContext.Booking.SingleOrDefault(c => c.RentedCar == carID
                 && c.CustomerId == carRentalContext.Customer.SingleOrDefault(d => d.CustomerSsn == customerSSN).Id);
 

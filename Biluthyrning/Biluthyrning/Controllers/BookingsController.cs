@@ -53,8 +53,15 @@ namespace Biluthyrning.Controllers
         [HttpPost]
         public IActionResult Book(CreateBookingVM booking)
         {
-            service.BookCar(booking);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                service.BookCar(booking);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]
@@ -70,15 +77,30 @@ namespace Biluthyrning.Controllers
         [HttpPost]
         public IActionResult Calculate(CalculateCostVM calc)
         {
-            CalculateCostVM resultVM = service.CalculateCost(calc);
-            return View(resultVM);
+            if (ModelState.IsValid)
+            {
+                return View(service.CalculateCost(calc));
+            }
+            else
+            {
+                return View();
+            }
         }
+
 
         [HttpPost]
         public IActionResult ReturnCar(int carId, string ssn, int distanceEnd)
         {
-            service.ReturnCar(carId, ssn, distanceEnd);
-            return RedirectToAction(nameof(Index));
+                try
+                {
+                    service.ReturnCar(carId, ssn, distanceEnd);
+                }
+                catch (Exception)
+                {
+                    throw;  //TODO: fånga upp om bokning/bil/nånting inte finns
+                }
+                return RedirectToAction(nameof(Index));
+           
         }
     }
 }

@@ -14,12 +14,12 @@
             <div class="col-2"></div>
             <div class="form-group col-4">
                 <label asp-for="CustomerSSN"></label>
-                <input type="text" asp-for="CustomerSSN" class="form-control" />
+                <input type="text" asp-for="CustomerSSN" class="form-control" autocomplete="off"/>
                 <span asp-validation-for="CustomerSSN"></span>
             </div>
             <div class="form-group col-4">
                 <label asp-for="DistanceEnd"></label>
-                <input type="text" asp-for="DistanceEnd" class="form-control" />
+                <input type="text" asp-for="DistanceEnd" class="form-control" autocomplete="off" />
                 <span asp-validation-for="DistanceEnd"></span>
             </div>
             <div class="col-2"></div>
@@ -28,7 +28,7 @@
             <div class="col-2"></div>
             <div class="form-group col-4">
                 <label asp-for="DateReturned"></label>
-                <input type="text" asp-for="DateReturned" class="form-control" id="datepicker" />
+                <input type="text" asp-for="DateReturned" class="form-control" id="datepicker" autocomplete="off" />
             </div>
             <div class="form-group col-4">
                 <label asp-for="CarRegistration"></label>
@@ -46,10 +46,10 @@
         Priset för denna uthyrning blir @Model.FinalPrice
     </p>
     <form asp-controller="Bookings" asp-action="ReturnCar">
+        <input class="btn btn-secondary" type="submit" value="Lämna tillbaka bil och betala" />
         <input type="hidden" value="@Model.RentedCar.Id" />
         <input type="hidden" value="@Model.CustomerSSN" />
-        <input type="hidden" value="@Model.DistanceEnd" />
-        <input class="btn btn-secondary" type="submit" value="Lämna tillbaka bil och betala" />
+        <input type="hidden" value="@Model.DateReturned" />
     </form>
 </div>
 
@@ -57,10 +57,12 @@
     <script type="text/javascript">
         $(function () {
             $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+            $("#datepicker").datepicker("setDate", "-0d");
+
         });
     </script>
    
-    <script type="text/javascript">
+    <script type="text/javascript">  //TODO: Gör om detta till ett JS som inte bara show/hide utan som tar in variabler och håller i dem för att populera mina hidden inputs i return car, om det går??
         $(function () {
             if (false) {
                 $("#resultPrice").hide();
